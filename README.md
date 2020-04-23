@@ -2,7 +2,7 @@
 
 [//]: # (Image References)
 
-[image1]: https://video.udacity-data.com/topher/2018/June/5b1ab4b0_banana/banana.gif "Banana Env"
+[image1]: https://video.udacity-data.com/topher/2018/June/5b1ea778_reacher/reacher.gif "Reacher Env"
 [image2]: https://user-images.githubusercontent.com/10624937/42386929-76f671f0-8106-11e8-9376-f17da2ae852e.png "Kernel"
 
 ![Trained Agents][image1]
@@ -13,13 +13,15 @@ This repository contains material related to Udacity's [Deep Reinforcement Learn
 
 This repository contains the following files:
 
-- Navigation_train.ipynb: The jupyter notebook used for training the agent that solves this environment. The notebook can also be used to visualize the trained agent.
+- Continuous_Control_train.ipynb: The jupyter notebook used for training the agent that solves this environment. The notebook can also be used to visualize the trained agent.
 
-- dqn_agent.py: Source code for the Deep Q-Network agent that solves the environment. Also contains the definition of the network model (layers, etc.) used for this agent.
+- ddpg_agent.py: Source code for the Deep Deterministic Policy Gradient agent that solves the environment.
 
-- checkpoint_solved.pth: Saved model weights (state dict) for the dqn agent.
+- model.py: Source code that defines the network architecture (layers, etc.) for the DDPG agent.
 
-- Banana.app.zip: Compressed Unity environment that the agent runs in.
+- checkpoint_*_solved.pth: Saved model weights (state dict) for the dqn agent. (4 different files!)
+
+- Reacher_multi.app.zip: Compressed Unity environment that the agent runs in.
 
 - python/: Folder used for installing dependencies
 
@@ -29,15 +31,13 @@ This repository contains the following files:
 
 The environment is implemented within Unity ML Agents. More info about these environments can be found [here](https://github.com/Unity-Technologies/ml-agents)
 
-In this case, a single agent has to navigate a square world (bounded by visible walls). The goal is collect as many yellow bananas as possible, while avoiding blue bananas. The bananas spawn at random locations. A reward of +1 is provided for collecting a yellow banana, and a reward of -1 is provided for collecting a blue banana.
+In this environment, a double-jointed arm can move to target locations. A reward of +0.1 is provided for each step that the agent's hand is in the goal location. Thus, the goal of the agent is to maintain its position at the target location for as many time steps as possible.
 
-The state space has 37 dimensions and contains the agent's velocity, along with ray-based perception of objects around the agent's forward direction. Given this information, the agent has to learn how to best select actions. Four discrete actions are available, corresponding to:
-•    0 - move forward.
-•    1 - move backward.
-•    2 - turn left.
-•    3 - turn right.
+The observation space consists of 33 variables corresponding to position, rotation, velocity, and angular velocities of the arm. Each action is a vector with four numbers, corresponding to torque applicable to two joints. Every entry in the action vector should be a number between -1 and 1.
 
-The task is episodic, and in order to solve the environment, the agent must get an average score of +13 over 100 consecutive episodes.
+To accelerate training for the agent, we use a multi-agent version of the environment that renders 20 robot arms, each with a different target, simultaneously. The scores of the different arms are averaged.
+
+The environment is considered solved, when the average (over 100 episodes) of those average scores is at least +30.
 
 ## Installation
 
@@ -82,11 +82,11 @@ python -m ipykernel install --user --name drlnd --display-name "drlnd"
 
 ## Getting started
 
-1. Unpack the Banana.app file.
+1. Unpack the Reacher_multi.app file.
 
-2. Open the Navigation_train.ipynb notebook.
+2. Open the Continuous_Control_train.ipynb notebook.
 
-3. Run the cells in the notebook to start the unity environment and initialize the DQN agent. You can train the agent, or you can skip to the end of the notebook to see a trained agent.
+3. Run the cells in the notebook to start the unity environment and initialize the DDPG agent. You can train the agent, or you can skip to the end of the notebook to see a trained agent.
 
-4. Close the environment from within the notebook, after you're done.
+4. Close the environment from within the notebook after you're done.
 
